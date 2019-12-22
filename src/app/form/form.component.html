@@ -1,0 +1,64 @@
+<p>
+  form works!
+</p>
+
+<form [formGroup]="form">
+  <div>
+    <label>Street</label> <br>
+    <input formControlName="street" type="text" />
+
+    <div class="error" *ngIf="form.controls['street'].invalid && form.controls['street'].touched">
+      Required, min length 3 symbols
+    </div>
+  </div>
+
+
+  <div>
+    <label>House Number</label> <br>
+    <input formControlName="houseNumber" type="text" />
+
+    <div class="error" *ngIf="form.controls['houseNumber'].invalid && form.controls['houseNumber'].touched">
+      Required, min length 1 symbol, max length 3 symbols
+    </div>
+  </div>
+
+
+  <div>
+    <label>City</label> <br>
+    <input formControlName="city" type="text" />
+
+    <div class="error" *ngIf="form.controls['city'].invalid && form.controls['city'].touched">
+      Required, min length 3 symbols, max length 15 symbols
+    </div>
+  </div>
+
+  <div>
+    <label>Email</label> <br>
+    <input formControlName="email" type="text" />
+
+    <div class="error" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+      Required, not valid email
+    </div>
+  </div>
+
+
+  <div formArrayName="phones">
+    <div *ngFor="let phone of form.controls['phones'].controls; let i = index">
+      <label>Phone {{i +1}}</label> <br> 
+      <input formControlName="{{i}}" />
+
+      <div class="error" *ngIf="phone.invalid && phone.touched">
+        Required, must start with "+3"
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button (click)="addPhone()">Add Phone</button>
+  </div>
+
+  
+  <br>
+
+  <button [disabled]="form.invalid">Submit</button>
+</form>
