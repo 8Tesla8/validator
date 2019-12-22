@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from "@angular/forms";
+import { phoneValidator } from "./phone-validator";
 
 @Component({
   selector: "app-form",
@@ -25,7 +26,7 @@ export class FormComponent implements OnInit {
       ]),
       city: new FormControl("", [Validators.required, Validators.minLength(3)]),
       email: new FormControl("", [Validators.required, Validators.email]),
-      phones: new FormArray([new FormControl("+3", [Validators.required, this.phoneValidator])])
+      phones: new FormArray([new FormControl("+3", [Validators.required, phoneValidator])])
     });
   }
   
@@ -35,16 +36,4 @@ export class FormComponent implements OnInit {
     );
   }
 
-
-  phoneValidator(control: FormControl): { [key: string]: boolean } {
-    let value = control.value as string;
-    
-    // good
-    if (value.startsWith("+3")) {
-      return null;
-    }
-    
-    // bad
-    return { phones: true };
-  }
 }

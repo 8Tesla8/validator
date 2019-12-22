@@ -8,7 +8,12 @@
     <input formControlName="street" type="text" />
 
     <div class="error" *ngIf="form.controls['street'].invalid && form.controls['street'].touched">
-      Required, min length 3 symbols
+      <span *ngIf="form.controls['street'].errors.required">
+        Required
+      </span>
+      <span *ngIf="form.controls['street'].errors.minlength">
+        Min length 3 symbols
+      </span>
     </div>
   </div>
 
@@ -18,7 +23,18 @@
     <input formControlName="houseNumber" type="text" />
 
     <div class="error" *ngIf="form.controls['houseNumber'].invalid && form.controls['houseNumber'].touched">
-      Required, min length 1 symbol, max length 3 symbols
+      <span *ngIf="form.controls['houseNumber'].errors.required">
+        Required
+      </span>
+      <span *ngIf="form.controls['houseNumber'].errors.minlength">
+        Min length 1 symbol
+      </span>
+      <span *ngIf="form.controls['houseNumber'].errors.manlength">
+        Max length 3 symbols
+      </span>
+      <span *ngIf="form.controls['houseNumber'].errors.pattern">
+        Must be only numbers
+      </span>
     </div>
   </div>
 
@@ -28,7 +44,12 @@
     <input formControlName="city" type="text" />
 
     <div class="error" *ngIf="form.controls['city'].invalid && form.controls['city'].touched">
-      Required, min length 3 symbols, max length 15 symbols
+      <span *ngIf="form.controls['city'].errors.required">
+        Required
+      </span>
+      <span *ngIf="form.controls['city'].errors.minlength">
+        Min length 3 symbol
+      </span>
     </div>
   </div>
 
@@ -37,7 +58,12 @@
     <input formControlName="email" type="text" />
 
     <div class="error" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
-      Required, not valid email
+      <span *ngIf="form.controls['email'].errors.required">
+        Required
+      </span>
+      <span *ngIf="form.controls['email'].errors.email">
+        Not valid email
+      </span>
     </div>
   </div>
 
@@ -48,7 +74,12 @@
       <input formControlName="{{i}}" />
 
       <div class="error" *ngIf="phone.invalid && phone.touched">
-        Required, must start with "+3"
+        <span *ngIf="phone.errors.required">
+          Required 
+        </span>
+        <span *ngIf="phone.errors.incorrectPhone">
+          Must start with "+3"
+        </span>
       </div>
     </div>
   </div>
