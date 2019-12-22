@@ -53,23 +53,9 @@
     </div>
   </div>
 
-  <div>
-    <label>Email</label> <br>
-    <input formControlName="email" type="text" />
-
-    <div class="error" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
-      <span *ngIf="form.controls['email'].errors.required">
-        Required
-      </span>
-      <span *ngIf="form.controls['email'].errors.email">
-        Not valid email
-      </span>
-    </div>
-  </div>
-
 
   <div formArrayName="phones">
-    <div *ngFor="let phone of form.controls['phones'].controls; let i = index">
+    <div *ngFor="let phone of form.get('phones').controls; let i = index">
       <label>Phone {{i +1}}</label> <br> 
       <input formControlName="{{i}}" />
 
@@ -88,8 +74,42 @@
     <button (click)="addPhone()">Add Phone</button>
   </div>
 
-  
-  <br>
+
+  <div formGroupName="account"> <br> 
+    <label>Account Info</label> 
+
+    <div>
+      <label>Email address</label> <br>
+      <input type="email" formControlName="email">
+
+      <div class="error" *ngIf="form.get('account').get('email').invalid && form.get('account').get('email').touched">
+        <span *ngIf="form.get('account').get('email').errors.required">
+          Required
+        </span>
+        <span *ngIf="form.get('account').get('email').errors.email">
+          Not valid email
+        </span>
+      </div>
+    </div>
+
+    <div>
+      <label>Confirm email address</label> <br>
+      <input type="email" formControlName="confirm">
+
+      <div class="error" *ngIf="form.get('account').get('confirm').invalid && form.get('account').get('confirm').touched">
+        <span *ngIf="form.get('account').get('confirm').errors.required">
+          Required
+        </span>
+        <span *ngIf="form.get('account').get('confirm').errors.email">
+          Not valid email
+        </span>
+      </div>
+    </div>
+
+    <div class="error" *ngIf="form.get('account').touched && form.get('account').hasError('nomatch')">
+      Email addresses must match
+    </div>
+  </div>
 
   <button [disabled]="form.invalid">Submit</button>
 </form>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from "@angular/forms";
-import { phoneValidator } from "./phone-validator";
+import { emailMatcher, startWithValidator } from "./validators";
 
 @Component({
   selector: "app-form",
@@ -25,9 +25,20 @@ export class FormComponent implements OnInit {
         Validators.maxLength(3)
       ]),
       city: new FormControl("", [Validators.required, Validators.minLength(3)]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      phones: new FormArray([new FormControl("+3", [Validators.required, phoneValidator])])
-    });
+
+      phones: new FormArray([new FormControl("", [Validators.required, startWithValidator("+3")])]), 
+      
+      account: new FormGroup ({
+        email: new FormControl("", [
+          Validators.required,
+          Validators.email
+        ]), 
+        confirm: new FormControl("", [
+          Validators.required,
+          Validators.email
+        ]),
+      }, emailMatcher) 
+    } );
   }
   
   public addPhone() {
@@ -36,4 +47,8 @@ export class FormComponent implements OnInit {
     );
   }
 
+  // +++
+  // FormGroup extend AbstractControl
+  // FormControl extend AbstractControl
+  // FormArray extend AbstractControl
 }
