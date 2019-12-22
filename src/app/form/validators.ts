@@ -1,4 +1,5 @@
-import { AbstractControl, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidatorFn, FormArray } from "@angular/forms";
+import { filter, uniqBy } from "lodash-es";
 
 function ageRangeValidator(min: number, max: number): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -16,16 +17,30 @@ export function startWithValidator(text: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
     let value = control.value as string;
 
-    // good
-    if (value.startsWith("+3")) {
-      return null;
-    }
+    if (value.startsWith(text)) return null;
 
-    // bad
-    return { incorrectPhone: true };
+    return { incorrectStart: true };
   };
 }
 
+export function samePhoneValidator(
+  control: AbstractControl
+): { [key: string]: boolean } {
+  let formArray = control as FormArray;
+
+  if (formArray.length === 0 || formArray.length === 1) return null;
+
+
+  let validControlls = filter(formArray.controls, { valid: true} );
+
+  if(validControlls.length === 0 || validControlls.length === 1 ) return null;
+ 
+
+  if(uniqBy(validControlls, "value").length === validControlls.length)
+    return null;
+ 
+  return { notUniq: true};
+}
 
 export function emailMatcher(
   control: AbstractControl

@@ -8,10 +8,10 @@
     <input formControlName="street" type="text" />
 
     <div class="error" *ngIf="form.controls['street'].invalid && form.controls['street'].touched">
-      <span *ngIf="form.controls['street'].errors.required">
+      <span *ngIf="form.controls['street'].hasError('required')">
         Required
       </span>
-      <span *ngIf="form.controls['street'].errors.minlength">
+      <span *ngIf="form.controls['street'].hasError('minlength')">
         Min length 3 symbols
       </span>
     </div>
@@ -23,16 +23,16 @@
     <input formControlName="houseNumber" type="text" />
 
     <div class="error" *ngIf="form.controls['houseNumber'].invalid && form.controls['houseNumber'].touched">
-      <span *ngIf="form.controls['houseNumber'].errors.required">
+      <span *ngIf="form.controls['houseNumber'].hasError('required')">
         Required
       </span>
-      <span *ngIf="form.controls['houseNumber'].errors.minlength">
+      <span *ngIf="form.controls['houseNumber'].hasError('minlength')">
         Min length 1 symbol
       </span>
-      <span *ngIf="form.controls['houseNumber'].errors.manlength">
+      <span *ngIf="form.controls['houseNumber'].hasError('maxlength')">
         Max length 3 symbols
       </span>
-      <span *ngIf="form.controls['houseNumber'].errors.pattern">
+      <span *ngIf="form.controls['houseNumber'].hasError('pattern')">
         Must be only numbers
       </span>
     </div>
@@ -44,10 +44,10 @@
     <input formControlName="city" type="text" />
 
     <div class="error" *ngIf="form.controls['city'].invalid && form.controls['city'].touched">
-      <span *ngIf="form.controls['city'].errors.required">
+      <span *ngIf="form.controls['city'].hasError('required')">
         Required
       </span>
-      <span *ngIf="form.controls['city'].errors.minlength">
+      <span *ngIf="form.controls['city'].hasError('minlength')">
         Min length 3 symbol
       </span>
     </div>
@@ -60,13 +60,19 @@
       <input formControlName="{{i}}" />
 
       <div class="error" *ngIf="phone.invalid && phone.touched">
-        <span *ngIf="phone.errors.required">
+        <span *ngIf="phone.hasError('required')">
           Required 
         </span>
-        <span *ngIf="phone.errors.incorrectPhone">
+        <span *ngIf="phone.hasError('incorrectStart')">
           Must start with "+3"
         </span>
       </div>
+    </div>
+
+    <div class="error" *ngIf="form.get('phones').invalid && form.get('phones').touched">
+      <span *ngIf="form.get('phones').hasError('notUniq')">
+        Phone numbers must be unique
+      </span>
     </div>
   </div>
 
@@ -83,10 +89,10 @@
       <input type="email" formControlName="email">
 
       <div class="error" *ngIf="form.get('account').get('email').invalid && form.get('account').get('email').touched">
-        <span *ngIf="form.get('account').get('email').errors.required">
+        <span *ngIf="form.get('account').get('email').hasError('required')">
           Required
         </span>
-        <span *ngIf="form.get('account').get('email').errors.email">
+        <span *ngIf="form.get('account').get('email').hasError('email')">
           Not valid email
         </span>
       </div>
@@ -97,10 +103,10 @@
       <input type="email" formControlName="confirm">
 
       <div class="error" *ngIf="form.get('account').get('confirm').invalid && form.get('account').get('confirm').touched">
-        <span *ngIf="form.get('account').get('confirm').errors.required">
+        <span *ngIf="form.get('account').get('confirm').hasError('required')">
           Required
         </span>
-        <span *ngIf="form.get('account').get('confirm').errors.email">
+        <span *ngIf="form.get('account').get('confirm').hasError('email')">
           Not valid email
         </span>
       </div>
