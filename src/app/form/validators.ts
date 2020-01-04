@@ -30,19 +30,17 @@ export function samePhoneValidator(
 
   if (formArray.length === 0 || formArray.length === 1) return null;
 
+  let validControlls = filter(formArray.controls, { valid: true });
 
-  let validControlls = filter(formArray.controls, { valid: true} );
+  if (validControlls.length === 0 || validControlls.length === 1) return null;
 
-  if(validControlls.length === 0 || validControlls.length === 1 ) return null;
- 
-
-  if(uniqBy(validControlls, "value").length === validControlls.length)
+  if (uniqBy(validControlls, "value").length === validControlls.length)
     return null;
- 
-  return { notUniq: true};
+
+  return { notUniq: true };
 }
 
-export function emailMatcher(
+export function emailMatcherValidator(
   control: AbstractControl
 ): { [key: string]: boolean } {
   const email = control.get("email");

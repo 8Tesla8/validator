@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormArray  } from "@angular/forms";
-import { emailMatcher, startWithValidator, samePhoneValidator } from "./validators";
+import { emailMatcherValidator, startWithValidator, samePhoneValidator } from "./validators";
 
 @Component({
   selector: "app-form",
@@ -39,13 +39,13 @@ export class FormComponent implements OnInit {
           Validators.required,
           Validators.email
         ]),
-      }, emailMatcher) 
+      }, emailMatcherValidator) 
     } );
   }
   
   public addPhone() {
     (<FormArray>this.form.controls["phones"]).push(
-      new FormControl("", Validators.required)
+      new FormControl("", [Validators.required, startWithValidator("+3")])
     );
   }
 
